@@ -47,18 +47,13 @@ class InterviewBot(private val questionsList: List<String>,
                     .privacy(Privacy.PUBLIC)
                     .action { ctx: MessageContext ->
                         val id = ctx.user().id
-                        if (users.containsKey(id)) {
+                        if (users.containsKey(id))
                             when (users[id]) {
-                                PENDING -> {
-                                    doStartTheInterview(id, ctx)
-                                }
-                                STARTED -> {
-                                    silent.send("Interview has already started.", ctx.chatId())
-                                }
+                                PENDING -> doStartTheInterview(id, ctx)
+                                STARTED -> silent.send("Interview has already started.", ctx.chatId())
                             }
-                        } else {
+                        else
                             doStartTheInterview(id, ctx)
-                        }
                     }
                     .build()
 
@@ -83,11 +78,9 @@ class InterviewBot(private val questionsList: List<String>,
                     .privacy(Privacy.PUBLIC)
                     .action { ctx: MessageContext ->
                         val id = ctx.user().id
-                        if (users.containsKey(id)) {
+                        if (users.containsKey(id))
                             when (users[id]) {
-                                PENDING -> {
-                                    silent.send("Firstly, you have to start the interview with command /interview", ctx.chatId())
-                                }
+                                PENDING -> silent.send("Firstly, you have to start the interview with command /interview", ctx.chatId())
                                 STARTED -> {
                                     val interviewQuestions = questions[id]
                                     if (!interviewQuestions.isNullOrEmpty()) {
@@ -95,14 +88,12 @@ class InterviewBot(private val questionsList: List<String>,
                                         val question = interviewQuestions[index]
                                         silent.send(question, ctx.chatId())
                                         interviewQuestions.remove(question)
-                                    } else {
+                                    } else
                                         silent.send("Sorry, no questions left for you :(", ctx.chatId())
-                                    }
                                 }
                             }
-                        } else {
+                        else
                             silent.send("Firstly, you have to start the interview with command /interview", ctx.chatId())
-                        }
                     }
                     .build()
 
