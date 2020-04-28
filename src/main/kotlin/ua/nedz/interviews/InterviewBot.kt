@@ -18,7 +18,7 @@ fun main() {
     ApiContextInitializer.init()
     val botsApi = TelegramBotsApi()
 
-    val questionsList = readQuestions("ArhipovQuestions")
+    val questionsList = readQuestions("BaruchQuestions")
     val (botUsername, botToken, creatorId) = readConfiguration("Configuration")
 
     try {
